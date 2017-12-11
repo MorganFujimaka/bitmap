@@ -1,16 +1,23 @@
+require_relative 'bitmap'
+
 class BitmapEditor
+  def run(filename)
+    return puts 'please provide correct file' if filename.nil? || !File.exists?(filename)
 
-  def run(file)
-    return puts "please provide correct file" if file.nil? || !File.exists?(file)
-
-    File.open(file).each do |line|
-      line = line.chomp
+    File.open(filename).each do |line|
+      line = line.chomp.strip
       case line
       when 'S'
-          puts "There is no image"
+        puts 'There is no image'
       else
-          puts 'unrecognised command :('
+        puts 'unrecognised command :('
       end
     end
+  end
+
+  private
+
+  def bitmap
+    @bitmap ||= ::Bitmap.read
   end
 end
