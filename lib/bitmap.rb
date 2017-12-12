@@ -1,35 +1,40 @@
-require 'matrix'
 require_relative 'colors'
 
 class Bitmap
-  MAX_ROW_COUNT    = 250
   MAX_COLUMN_COUNT = 250
+  MAX_ROW_COUNT    = 250
 
   FILENAME = 'bitmap'.freeze
 
-  attr_reader :row_count, :column_count, :pixels
+  attr_reader :pixels
 
-  def initialize(row_count, column_count, color = ::Colors::O)
-    if row_count > MAX_ROW_COUNT || column_count > MAX_COLUMN_COUNT
-      raise ArgumentError, 'Maximum allowed size is 200 x 200'
-    end
-
-    @row_count    = row_count
-    @column_count = column_count
-    @pixels       = Matrix.build(row_count, column_count) { color }
+  def self.write(bitmap)
+    File.open(FILENAME, 'w') { |f| f.write(Marshal.dump(self)) }
   end
 
-  def write
-    File.open(FILENAME, 'w') do |file|
-      file.write Marshal.dump(self)
-    end
-  end
-
-  def read
+  def self.read
     return unless File.exists?(FILENAME)
 
-    File.open(FILENAME, 'r') do |file|
-      Marshal.load(file.read)
+    File.open(FILENAME, 'r') { |f| Marshal.load(f.read) }
+  end
+
+  def initialize(c_count, r_count, color = Colors::WHITE)
+    if c_count > MAX_COLUMN_COUNT || r_count > MAX_ROW_COUNT
+      abort "Maximum allowed size is #{MAX_COLUMN_COUNT} x #{MAX_ROW_COUNT}"
     end
+
+    @pixels = Array.new(r_count) { Array.new(c_count) { color } }
+  end
+
+  def column_count
+    pixels.first.count
+  end
+
+  def row_count
+    pixels.count
+  end
+
+  def color_pixel(x, y, color)
+    pixels[y - 1][x - 1] = color
   end
 end

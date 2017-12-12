@@ -1,23 +1,28 @@
+require 'pry'
 require_relative 'bitmap'
+require_relative 'command_parser'
+require_relative 'commands'
 
 class BitmapEditor
   def run(filename)
-    return puts 'please provide correct file' if filename.nil? || !File.exists?(filename)
+    return puts 'Please provide correct file' if filename.nil? || !File.exists?(filename)
+
+    bitmap = Bitmap.read
 
     File.open(filename).each do |line|
-      line = line.chomp.strip
-      case line
-      when 'S'
-        puts 'There is no image'
-      else
-        puts 'unrecognised command :('
-      end
+      line = line.chomp
+
+      binding.pry
+      next if !line || line.empty?
+
+      command, *args = *CommandParser.parse(line)
+
+      bitmap = Commands::COMMANDS.fetch(command.to_sym) { abort "Unrecognised command #{command}" }.run(bitmap, args)
     end
-  end
 
-  private
-
-  def bitmap
-    @bitmap ||= ::Bitmap.read
+    Bitmap.write(bitmap)
   end
 end
+
+# require './lib/bitmap_editor'
+# BitmapEditor.new.run('examples/show.txt')

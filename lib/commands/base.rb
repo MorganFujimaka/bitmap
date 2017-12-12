@@ -1,7 +1,30 @@
+require 'pry'
+
 module Commands
   class Base
-    def initialize(bitmap)
-      raise ArgumentError, 'Bitmap file required' unless bitmap
+    attr_reader :bitmap, :args
+
+    def self.run(bitmap, args)
+      new(bitmap, args).run
+    end
+
+    def initialize(bitmap, args)
+      @bitmap = bitmap
+      @args   = args
+    end
+
+    def run
+      raise NotImplementedError
+    end
+
+    private
+
+    def validate_bitmap_presence
+      abort 'Bitmap required' unless bitmap
+    end
+
+    def error_message(message)
+      "#{self.class}: #{message}"
     end
 
     def description

@@ -1,3 +1,5 @@
+require_relative 'base'
+
 module Commands
   class H < Base
     def description
