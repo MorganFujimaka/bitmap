@@ -12,7 +12,6 @@ class BitmapEditor
     File.open(filename).each do |line|
       line = line.chomp
 
-      binding.pry
       next if !line || line.empty?
 
       command, *args = *CommandParser.parse(line)
@@ -23,6 +22,3 @@ class BitmapEditor
     Bitmap.write(bitmap)
   end
 end
-
-# require './lib/bitmap_editor'
-# BitmapEditor.new.run('examples/show.txt')

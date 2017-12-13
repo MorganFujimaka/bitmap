@@ -1,5 +1,6 @@
 require_relative 'base'
 
+# C - Clears the table, setting all pixels to white (O)
 module Commands
   class C < Base
     def run
@@ -10,12 +11,6 @@ module Commands
       end
 
       bitmap
-    end
-
-    private
-
-    def description
-      'C - Clears the table, setting all pixels to white (O)'
     end
   end
 end
