@@ -15,9 +15,9 @@ module Commands
     private
 
     def validate_args
-      abort error_message('3 arguments required: X Y C') unless args.count == 3
-      abort error_message('X and Y should be integers')  unless args[0..1].all? { |i| i.match(/\d/) }
-      abort error_message('Invalid color passed')        unless Colors.valid?(args[2])
+      raise ArgumentError, error_message('3 arguments required: X Y C') unless args.count == 3
+      raise ArgumentError, error_message('X and Y should be integers')  unless args[0..1].all? { |i| i.match(/\d/) }
+      raise ArgumentError, error_message('Invalid color passed')        unless Colors.valid?(args[2])
     end
   end
 end
