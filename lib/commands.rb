@@ -1,9 +1,4 @@
-require_relative 'commands/c'
-require_relative 'commands/h'
-require_relative 'commands/i'
-require_relative 'commands/l'
-require_relative 'commands/s'
-require_relative 'commands/v'
+Dir["./lib/commands/*.rb"].each {|file| require file }
 
 module Commands
   COMMANDS = {

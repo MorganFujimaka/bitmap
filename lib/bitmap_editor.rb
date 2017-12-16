@@ -7,9 +7,10 @@ require_relative 'commands'
 
 class BitmapEditor
   def run(filename)
-    raise ArgumentError, 'Please provide correct file' if filename.nil? || !File.exists?(filename)
+    raise ArgumentError, 'Please provide correct file' if filename.nil? || !File.exists?(filename) || File.zero?(filename)
 
-    bitmap = Bitmap.new(BitmapReader.read)
+    pixels = BitmapReader.read
+    bitmap = pixels ? Bitmap.new(pixels) : nil
 
     File.open(filename).each do |line|
       line = line.chomp
@@ -21,6 +22,6 @@ class BitmapEditor
       bitmap = Commands::COMMANDS.fetch(command.to_sym) { raise ArgumentError, "Unrecognised command #{command}" }.run(bitmap, args)
     end
 
-    BitmapWriter.write(bitmap)
+    BitmapWriter.write(bitmap) if bitmap
   end
 end

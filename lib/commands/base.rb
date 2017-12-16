@@ -20,7 +20,7 @@ module Commands
     private
 
     def validate_bitmap_presence
-      raise error_message('Bitmap required') unless bitmap
+      raise ArgumentError, error_message('Bitmap required') unless bitmap
     end
 
     def error_message(message)
