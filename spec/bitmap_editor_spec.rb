@@ -65,54 +65,50 @@ describe BitmapEditor do
   end
 
   context 'Flood Fill' do
-    context 'a mutable color' do
-      expected_result =
-        [
-          %w( R R X O O ),
-          %w( R R X O O ),
-          %w( R R X O O )
-        ]
+    expected_result =
+      [
+        %w( R R X O O ),
+        %w( R R X O O ),
+        %w( R R X O O )
+      ]
 
-      it_behaves_like :bitmap_editor, commands_filename: 'example_8.txt', success: true, expected_result: expected_result
+    it_behaves_like :bitmap_editor, commands_filename: 'example_8.txt', success: true, expected_result: expected_result
 
-      expected_result =
-        [
-          %w( O X R R R ),
-          %w( O X R R R ),
-          %w( O X R R R )
-        ]
+    expected_result =
+      [
+        %w( O X R R R ),
+        %w( O X R R R ),
+        %w( O X R R R )
+      ]
 
-      it_behaves_like :bitmap_editor, commands_filename: 'example_9.txt', success: true, expected_result: expected_result
+    it_behaves_like :bitmap_editor, commands_filename: 'example_9.txt', success: true, expected_result: expected_result
 
-      expected_result =
-        [
-          %w( R R R R R ),
-          %w( R R X R R ),
-          %w( R R X R R )
-        ]
+    expected_result =
+      [
+        %w( R R R R R ),
+        %w( R R X R R ),
+        %w( R R X R R )
+      ]
 
-      it_behaves_like :bitmap_editor, commands_filename: 'example_10.txt', success: true, expected_result: expected_result
+    it_behaves_like :bitmap_editor, commands_filename: 'example_10.txt', success: true, expected_result: expected_result
 
-      expected_result =
-        [
-          %w( O O X X X ),
-          %w( O O X R X ),
-          %w( O O X X R )
-        ]
+    expected_result =
+      [
+        %w( O O O O O ),
+        %w( O O R O O ),
+        %w( O O R O O )
+      ]
 
-      it_behaves_like :bitmap_editor, commands_filename: 'example_12.txt', success: true, expected_result: expected_result
-    end
+    it_behaves_like :bitmap_editor, commands_filename: 'example_11.txt', success: true, expected_result: expected_result
 
-    context 'an immutable element' do
-      expected_result =
-        [
-          %w( O O O O O ),
-          %w( O O X O O ),
-          %w( O O X O O )
-        ]
+    expected_result =
+      [
+        %w( O O X X X ),
+        %w( O O X R X ),
+        %w( O O X X R )
+      ]
 
-      it_behaves_like :bitmap_editor, commands_filename: 'example_11.txt', success: true, expected_result: expected_result
-    end
+    it_behaves_like :bitmap_editor, commands_filename: 'example_12.txt', success: true, expected_result: expected_result
   end
 
   context 'Too large row count' do
