@@ -92,6 +92,15 @@ describe BitmapEditor do
         ]
 
       it_behaves_like :bitmap_editor, commands_filename: 'example_10.txt', success: true, expected_result: expected_result
+
+      expected_result =
+        [
+          %w( O O X X X ),
+          %w( O O X R X ),
+          %w( O O X X R )
+        ]
+
+      it_behaves_like :bitmap_editor, commands_filename: 'example_12.txt', success: true, expected_result: expected_result
     end
 
     context 'an immutable element' do

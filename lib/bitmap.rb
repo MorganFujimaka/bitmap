@@ -79,6 +79,10 @@ class Bitmap
     flood_fill(x - 1, y, color)
     flood_fill(x, y + 1, color)
     flood_fill(x, y - 1, color)
+    flood_fill(x + 1, y + 1, color)
+    flood_fill(x - 1, y + 1, color)
+    flood_fill(x + 1, y - 1, color)
+    flood_fill(x - 1, y - 1, color)
   end
 
   private
