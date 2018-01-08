@@ -64,6 +64,23 @@ class Bitmap
     end
   end
 
+  def flood_fill(x, y, color)
+    x, y = x.to_i, y.to_i
+
+    return unless (1..column_count).include?(x)
+    return unless (1..row_count).include?(y)
+
+    return if pixels[y - 1][x - 1] == Colors::IMMUTABLE
+    return if pixels[y - 1][x - 1] == color
+
+    pixels[y - 1][x - 1] = color
+
+    flood_fill(x + 1, y, color)
+    flood_fill(x - 1, y, color)
+    flood_fill(x, y + 1, color)
+    flood_fill(x, y - 1, color)
+  end
+
   private
 
   def column_count

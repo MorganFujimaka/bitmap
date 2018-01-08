@@ -13,7 +13,7 @@ describe BitmapEditor do
 
     if params.fetch(:success)
       context 'success' do
-        let(:pixels)   { Marshal.load(Base64.decode64(File.open(test_bitmap, 'r') { |f| f.read })) }
+        let(:pixels) { Marshal.load(Base64.decode64(File.open(test_bitmap, 'r') { |f| f.read })) }
 
         before do
           subject.run(commands_filename)
@@ -62,6 +62,48 @@ describe BitmapEditor do
       ]
 
     it_behaves_like :bitmap_editor, commands_filename: 'example_2.txt', success: true, expected_result: expected_result
+  end
+
+  context 'Flood Fill' do
+    context 'a mutable color' do
+      expected_result =
+        [
+          %w( R R X O O ),
+          %w( R R X O O ),
+          %w( R R X O O )
+        ]
+
+      it_behaves_like :bitmap_editor, commands_filename: 'example_8.txt', success: true, expected_result: expected_result
+
+      expected_result =
+        [
+          %w( O X R R R ),
+          %w( O X R R R ),
+          %w( O X R R R )
+        ]
+
+      it_behaves_like :bitmap_editor, commands_filename: 'example_9.txt', success: true, expected_result: expected_result
+
+      expected_result =
+        [
+          %w( R R R R R ),
+          %w( R R X R R ),
+          %w( R R X R R )
+        ]
+
+      it_behaves_like :bitmap_editor, commands_filename: 'example_10.txt', success: true, expected_result: expected_result
+    end
+
+    context 'an immutable element' do
+      expected_result =
+        [
+          %w( O O O O O ),
+          %w( O O X O O ),
+          %w( O O X O O )
+        ]
+
+      it_behaves_like :bitmap_editor, commands_filename: 'example_11.txt', success: true, expected_result: expected_result
+    end
   end
 
   context 'Too large row count' do
